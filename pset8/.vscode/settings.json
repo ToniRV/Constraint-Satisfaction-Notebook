@@ -1,9 +1,0 @@
-{
-    "python.venvFolders": [
-        "envs",
-        ".pyenv",
-        ".direnv",
-        ".virtualenvs"
-    ],
-    "python.pythonPath": "/Users/tonirv/.virtualenvs/pset8/bin/python"
-}
