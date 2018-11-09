@@ -25,3 +25,38 @@ https://en.wikipedia.org/wiki/Sudoku_solving_algorithms
 ## Algorithms:
 1- Extract common functions that we can use for all algorithms.
 2- 
+
+## Installation
+Heavily recommended to use a virtual environment to use this setup.
+You can do that by for example using virtualenv and virtualenvwrapper.
+Install pip:
+```
+brew install pip
+```
+
+Install virtualenv:
+```
+pip install virtualenv
+```
+
+Install virtualenvwrapper:
+```
+pip install virtualenvwrapper
+```
+
+Now, let's clone this repo and install the necessary requirements.
+```
+git clone git@github.com:ToniRV/Constraint-Satisfaction-Notebook.git csp_notebook
+cd csp_notebook
+mkvirtualenv csp_notebook --python=/usr/local/bin/python3 -r requirements.txt
+```
+
+Finally, activate your virtual environment:
+```
+workon csp_notebook
+```
+
+You are ready to go!
+```
+jupyter notebook CSPs.ipynb
+```
