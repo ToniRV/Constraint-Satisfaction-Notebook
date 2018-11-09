@@ -1,0 +1,34 @@
+\chapter{Project Proposal}\label{sec:project_proposal}
+
+We will explain in this project the fundamentals of Constraint Satisfaction Problems following the notes and content presented in MIT's 16.413 course: \textit{Principles of Autonomy and Decision Making}.
+
+In particular, we will explain the following topics in an interactive way by focusing on solving the well-known \textbf{Sudoku} problem in different ways, while comparing the benefits and disadvantages of the different approaches:
+\begin{itemize}
+  \item \textbf{Constraint Propagation}:
+    The easiest instances of Sudoku can be solved by simply applying constraint propagation. We will produce examples of solvable Sudoku instances using the following algorithms:
+    \begin{itemize}
+      \item AC-1 (a na\"ive \textbf{arc consistency} algorithm).
+      \item AC-3 \cite{MACKWORTH197799}: an improved arc consistency algorithm.
+      \item PC-2 \cite{MACKWORTH197799}: a \textbf{path consistency} algorithm.
+    \end{itemize}
+    We will analyze their complexity both theoretically (as in the course), and empirically by running them on multiple instances.
+    We will also present examples of incrementally difficult Sudoku instances to show where these approaches fail respectively, and use this opportunity to introduce the concept of \textbf{K-consistency}.
+  \item \textbf{Backtracking Search}:
+    Certain Sudoku instances cannot be solved by constraint propagation alone, in which case we need to search for a solution.
+    We will hence present a backtracking algorithm that works on partial assignments, and show that while this algorithm can solve certain Sudoku problems it still struggles with some.
+    Instead, if we combine a constraint propagation (inference) with backtracking we can achieve fast solving times, while solving any instance of Sudoku.
+    In particular, we detail the following algorithms:
+    \begin{itemize}
+      \item \textbf{Forward checking} \cite{HARALICK1980263} is a simple inference algorithm to prune portions of the search space by shortening the domain of variables that are arc-inconsistent with the current variable.
+      \item \textbf{Dynamic variable ordering} \cite{bacchus1995dynamic} provides a framework to dynamically change the order in which the variables are instantiated during tree search. \textbf{Minimum remaining value} is a popular ordering heuristic that can be used in the dynamic variable ordering framework to solve search problems faster.
+    \end{itemize}
+
+  \item \textbf{Local Search} (also known as Iterative Repair).
+  While backtracking works on partial assignments, local search algorithms work on complete assignments and try to iteratively modify these to converge to a solution.
+  We will briefly cover the \textbf{min-conflicts} heuristic \cite{minton1990solving}. Fun fact is that this heuristic managed to reduce the time taken to schedule a week of observations by the Hubble Space Telescope from three weeks to around 10 minutes \cite{russell2016artificial}.
+\end{itemize}
+
+Finally, we will extend the provided course content by presenting the \textbf{MAC algorithm} \cite{10.1007/3-540-58601-6_86} (Maintaining Arc Consistency) which improves the forward checking algorithm that we will learn in class.
+The basic idea is that MAC propagates constraints recursively when changes are made to the domains of variables.
+
+Finally, we will be using \cite{russell2016artificial} and \cite{dechter2003constraint} for reference in parallel with the lecture content.

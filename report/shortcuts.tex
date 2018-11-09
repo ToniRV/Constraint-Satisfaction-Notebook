@@ -1,0 +1,235 @@
+% Shortcuts
+\newcommand{\hide}[1]{}
+\newcommand{\Figure}{Fig.~}%Put the \ref next to \Figure: \Figure\ref{...}
+\newcommand{\Equation}{Eq.~}
+\newcommand{\ie}{\emph{ie.~}}
+\newcommand{\eg}{\emph{eg.~}}
+\newcommand{\cf}{\emph{cf.~}}
+\newcommand{\bdmath}{\begin{dmath}}
+\newcommand{\edmath}{\end{dmath}}
+\newcommand{\beq}{\begin{equation}}
+\newcommand{\eeq}{\end{equation}}
+\newcommand{\bdm}{\begin{displaymath}}
+\newcommand{\edm}{\end{displaymath}}
+\newcommand{\bea}{\begin{eqnarray}}
+\newcommand{\eea}{\end{eqnarray}}
+\newcommand{\beal}{\beq \begin{array}{ll}}
+\newcommand{\eeal}{\end{array} \eeq}
+\newcommand{\beas}{\begin{eqnarray*}}
+\newcommand{\eeas}{\end{eqnarray*}}
+\newcommand{\ba}{\begin{array}} % Remember to add option, i.e. \ba{lcc}
+\newcommand{\ea}{\end{array}}
+\newcommand{\bpa}{\left(\ba} % Remember to add option, i.e. \bpa{lcc}
+\newcommand{\epa}{\ea\right)}
+\newcommand{\bit}{\begin{itemize}}
+\newcommand{\eit}{\end{itemize}}
+\newcommand{\ben}{\begin{enumerate}}
+\newcommand{\een}{\end{enumerate}}
+\newcommand{\bbmat}{\begin{bmatrix}}
+\newcommand{\ebmat}{\end{bmatrix}}
+\newcommand{\bpmat}{\begin{pmatrix}}
+\newcommand{\epmat}{\end{pmatrix}}
+
+% Operators
+\DeclareMathOperator*{\argmin}{argmin}
+
+% Groups, Domains, Sets
+\newcommand{\SO}{\mathrm{SO}}
+\newcommand{\so}{\mathfrak{so}}
+\newcommand{\SE}{\mathrm{SE}}
+\newcommand{\se}{\mathfrak{se}}
+\newcommand{\Sphere}{\mathrm{S}}
+\newcommand{\su}{\mathfrak{su}}
+\newcommand{\Real}{\mathbb{R}}
+\newcommand{\Int}{\mathbb{Z}}
+\newcommand{\ImageDomain}{\Omega}
+\newcommand{\Surface}{\mathcal{S}}
+\newcommand{\SEtwo}{\ensuremath{\mathrm{SE}(2)}\xspace}
+\newcommand{\SEthree}{\ensuremath{\mathrm{SE}(3)}\xspace}
+\newcommand{\SOtwo}{\ensuremath{\mathrm{SO}(2)}\xspace}
+\newcommand{\SOthree}{\ensuremath{\SO(3)}\xspace}
+\newcommand{\sothree}{\ensuremath{\so(3)}\xspace}
+\newcommand{\Sthree}{\ensuremath{\Sphere^3}\xspace}
+\newcommand{\sutwo}{\ensuremath{\su(2)}\xspace}
+\newcommand{\setdef}[2]{ \{#1 \; {:} \; #2 \} }
+\newcommand{\Pthree}{\ensuremath{\mathbb{P}^3}\xspace}
+
+% Calligraphic fonts
+\newcommand{\calA}{{\cal A}}
+\newcommand{\calB}{{\cal B}}
+\newcommand{\calC}{{\cal C}}
+\newcommand{\calD}{{\cal D}}
+\newcommand{\calE}{{\cal E}}
+\newcommand{\calF}{{\cal F}}
+\newcommand{\calG}{{\cal G}}
+\newcommand{\calH}{{\cal H}}
+\newcommand{\calI}{{\cal I}}
+\newcommand{\calJ}{{\cal J}}
+\newcommand{\calK}{{\cal K}}
+\newcommand{\calL}{{\cal L}}
+\newcommand{\calM}{{\cal M}}
+\newcommand{\calN}{{\cal N}}
+\newcommand{\calO}{{\cal O}}
+\newcommand{\calP}{{\cal P}}
+\newcommand{\calQ}{{\cal Q}}
+\newcommand{\calR}{{\cal R}}
+\newcommand{\calS}{{\cal S}}
+\newcommand{\calT}{{\cal T}}
+\newcommand{\calU}{{\cal U}}
+\newcommand{\calV}{{\cal V}}
+\newcommand{\calW}{{\cal W}}
+\newcommand{\calX}{{\cal X}}
+\newcommand{\calZ}{{\cal Z}}
+
+% Image
+\newcommand{\Image}{\mathtt{I}}
+\newcommand{\Depth}{\mathtt{D}}
+\newcommand{\bearingvec}{\mathbf{f}}
+\newcommand{\px}{\mathbf{u}} % Pixel
+\newcommand{\pt}{\mathbf{p}} % 3D point
+\newcommand{\depth}{d}
+\newcommand{\proj}{\pi}
+
+% Transformation
+\newcommand{\T}{\mathtt{T}}
+\newcommand{\R}{\mathtt{R}}
+\renewcommand{\S}{\mathtt{S}}
+\newcommand{\Identity}{\mathbf{I}}
+\newcommand{\inv}{^{-1}}
+
+% Matrices
+\newcommand{\trace}[1]{\mathrm{tr}\left(#1\right)}
+
+% Other
+\newcommand{\residual}{\mathbf{r}}
+\newcommand{\transpose}{\mathsf{T}} % consider using instead \rm T
+\newcommand{\Zero}{\mathbf{0}}
+\newcommand{\eye}{{\mathbf I}}
+\renewcommand{\skew}{{\mathbf S}}
+\newcommand{\Jac}{\mathtt{J}}
+\newcommand{\Zthree}{\Zero_{3 \times 3}}
+\newcommand{\Ithree}{\eye_{3 \times 3}}
+
+% Imu
+\newcommand{\rotvel}{\boldsymbol\omega}
+\newcommand{\acc}{\mathbf{a}}
+\newcommand{\rotvec}{\boldsymbol\phi}
+\newcommand{\rotvecpert}{\delta\rotvec}
+\newcommand{\rotvecang}{\varphi}	% rotation vector angle
+\newcommand{\rotvecdir}{\mathbf{a}} % rotation vector direction
+\newcommand{\tran}{\mathbf{p}}
+\newcommand{\tranpert}{\delta\tran}
+\newcommand{\vel}{\mathbf{v}}
+\newcommand{\velpert}{\delta\vel}
+\newcommand{\bias}{\mathbf{b}}
+\newcommand{\biaspert}{\delta\bias}
+\newcommand{\gravity}{\mathbf{g}}
+\newcommand{\noise}{\boldsymbol\eta}
+\newcommand{\VIO}{VIO\xspace}
+\newcommand{\odometry}{navigation\xspace}
+\newcommand{\tango}{{\rm Tango}\xspace}
+
+% Quaternions
+\newcommand{\Quat}{\ensuremath{\boldsymbol{q}}\xspace}
+
+% Poses
+\newcommand{\Pose}{\ensuremath{x}\xspace}
+\newcommand{\PoseMeas}{\ensuremath{\tilde{x}}\xspace}
+\newcommand{\PoseEst}{\ensuremath{\hat{x}}\xspace}
+
+% Planes
+\newcommand{\Plane}{\ensuremath{\boldsymbol{\pi}}\xspace}
+\newcommand{\PlaneMeas}{\ensuremath{\boldsymbol{\tilde\pi}}\xspace}
+\newcommand{\PlaneEst}{\ensuremath{\boldsymbol{\hat\pi}}\xspace}
+
+% Paper Specific
+\newcommand{\Normal}{\ensuremath{\boldsymbol{n}}\xspace}
+\newcommand{\hl}[1]{ {\color{red} #1} }
+\newcommand{\cut}[1]{\hl{cut? $\rightarrow$ #1}}
+\newcommand{\Cov}{\mathbf{\Sigma}}
+\newcommand{\at}[1]{^{(#1)}}
+\newcommand{\expmap}{\mathrm{Exp}}
+\newcommand{\logmap}{\mathrm{Log}}
+\newcommand{\normsq}[2]{\left\|#1\right\|^2_{#2}}
+\newcommand{\abs}[1]{\lvert#1\rvert}
+\renewcommand{\d}{\text{d}}
+\newcommand{\Rmean}{\R}
+\newcommand{\Rrand}{\tilde\R}
+\newcommand{\eq}{Eq.}
+\newcommand{\eqs}{Eqs.}
+
+\newcommand{\iSAMtwo}{iSAM2\xspace}
+\newcommand{\MAP}{MAP\xspace}
+\newcommand{\SVO}{SVO\xspace}
+\newcommand{\GN}{GN\xspace}
+\newcommand{\meascam}{\mathcal{C}}
+\newcommand{\measimu}{\mathcal{I}}
+\newcommand{\covprior}{\mathbf{\Sigma}}
+\newcommand{\covimu}{\mathbf{\Sigma}}
+\newcommand{\covcam}{\mathbf{\Sigma}_{\meascam}}
+\newcommand{\World}{\text{W}}
+\newcommand{\Imu}{\text{B}}
+\newcommand{\Camera}{\text{C}}
+\newcommand{\world}{\text{\tiny{W}}}
+\newcommand{\imu}{\text{\tiny{B}}}
+\newcommand{\camera}{\text{\tiny{C}}}
+\newcommand{\cam}{{\scriptsize \text{c}}}
+\newcommand{\accshort}{\tilde\acc(t)\!-\! \bias^a(t) \!-\! \noise^{ad}(t)}
+\newcommand{\preintVar}{increments\xspace}
+\newcommand{\biasFixedPreintVar}{bias-fixed increments\xspace}
+\newcommand{\biasFixed}{\bar{\bias}}
+\newcommand{\biasFixedDelta}{\Delta}
+\newcommand{\biasHat}{\hat{\bias}}
+\newcommand{\meters}{\rm{m}}
+\newcommand{\preintRmeas}{\Delta\tilde\R}
+\newcommand{\preintVmeas}{\Delta\tilde\vel}
+\newcommand{\preintPmeas}{\Delta\tilde\tran}
+
+% smart factors
+\newcommand{\pixel}{\mathbf{z}}
+\newcommand{\pixelnoise}{\noise_{cam}}
+\newcommand{\landmark}{\mathbf{\rho}}
+\newcommand{\landmarkj}{\mathbf{X}_{j}}
+\newcommand{\landpert}{\delta\landmark}
+\newcommand{\posepert}{\delta\mathbf{T}}
+\newcommand{\bvec}{\mathbf{b}}
+\newcommand{\Amat}{\mathbf{A}}
+\newcommand{\Bmat}{\mathbf{B}}
+\newcommand{\Fmat}{\mathbf{F}}
+\newcommand{\Emat}{\mathbf{E}}
+\newcommand{\Qmat}{\mathbf{Q}}
+%
+\newcommand{\appendixRef}{Appendix\xspace}
+\newcommand{\subimu}{{ij}}
+\newcommand{\indmeas}{(i,j)}
+
+
+% Jacobians
+\newcommand{\DLog}{\mathtt{J}_{r}^{-1}}
+\newcommand{\DExp}{\mathtt{J}_{r}}
+\newcommand{\DExpk}{\mathtt{J}^k_{r}}
+\newcommand{\jacobian}[2]{\frac{\partial #1}{\partial #2}}
+
+% updates
+\newcommand{\rup}{\rotvecpert}
+\newcommand{\tup}{\tranpert}
+\newcommand{\vup}{\velpert}
+\newcommand{\bupa}{\tilde\delta{\bias^a_i}}
+\newcommand{\bupg}{\tilde\delta{\bias^g_i}}
+
+% Preintegrated measurements
+\newcommand{\pRot}{\Delta\bar\R_{ij} } % integration value
+\newcommand{\pRotk}{\Delta\bar\R_{ik} } % integration value
+\newcommand{\pTran}{\Delta\bar\tran_{ij}}
+\newcommand{\pVel}{\Delta\bar\vel_{ij}}
+\newcommand{\pVelk}{\Delta\bar\vel_{ik}}
+\newcommand{\mRot}{\Delta\tilde\R_{ij}} % measured
+\newcommand{\mTran}{\Delta\tilde\tran_{ij}}
+\newcommand{\mVel}{\Delta\tilde\vel_{ij}}
+\newcommand{\Adjoint}{\mathtt{Ad}}
+
+\newcommand{\biasCorrectedGyroMeas}{\tilde\rotvel(t) \!-\! \bias^g(t)}
+\newcommand{\biasCorrectedAccMeas}{\tilde\acc(t) \!-\! \bias^a(t)}
+\newcommand{\Rmeas}{\tilde\R}
+\newcommand{\vmeas}{\tilde\vel}
+\newcommand{\tmeas}{\tilde\tran}

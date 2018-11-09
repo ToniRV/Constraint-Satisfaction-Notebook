@@ -1,0 +1,204 @@
+\chapter{Lecture Notes}
+
+\section{Constraint Satisfaction Problems}
+\subsection{Introduction}
+Constraint satisfaction problem represents states using a list of variables with assignments and conditions for a solution in the form of constraints on the variables. This allows us to treat the state space with structure - using a factored representation for each state contrary to the black box view used in state space search problems. This framework allows us to model complex constrained decision problems at varying time scales (Eg: Earth Observation Decadal Planning and and Aircraft design).
+
+\subsection{Mathematical representation}
+Formally, Constraint Satisfaction Problem (CSP) can be defined as a triple of $<X,D,C>$ where X is a set of variables, D is the domain of each of the variables in V and C is the set of constraints defining the problem. Each constraint in C can be thought of as a pair of scope S which is a subset of V and a relation R between variables in S. The problem of having seeking a set with one A and two B's can be cast in the CSP framework with $V = \{A,B\}$, $D = \{1,2\}$ and constraint $C = \{[\{A,B\},\{\{1,2\},\{1,1\}\}],[\{A,B\},\{\{1,2\},\{2,2\}\}]\}$ where the first constraint tells that there must be exactly one A and the second constraint imposes the fact that there must be two B's. The solution to the problem is when both the constraints are satisfied which is possible only when the assignment is (1,2).
+
+\subsection{Constraint graph}
+CSPs can be visualized using constraint graphs where the nodes represent the variables and the edges represent the constraint between the variables connected by it. Any CSP can be represented using a constraint graph  because any constraint involving multiple variables can be converted to binary variables by adding additional variables to the problem.\\
+
+
+\section{Constraint Propagation}
+Apart from searching the state space, constraint programming also allows us to perform specific type of inference called constraint Propagation which helps in eliminating unwanted parts of the state space based on the constraint satisfaction.
+\subsection{Node consistency}
+A single variable in a CSP is said to be \textbf{node-consistent} if all it's unary constraints are satisfied. We can use this to delete some values in the domain of the variable that doesn't satisfy the unary constraint on that variable. A network is node-consistent if all the variables in it are also node-constraint.
+\subsection{Arc consistency}
+A variable in CSP is said to be \textbf{arc-consistent} if every value in its domain satisfies binary constraints imposed on the variable. Similar to node consistency, checking for arc-consistency can help reduce the domain size of a variable before performing search. Algorithm 1 shown below describes a Revise procedure that ensures that a given node $X_{i}$ is arc-consistent.
+\begin{algorithm}
+  \caption{Revise}\label{revise}
+  \begin{algorithmic}[1]
+    \Procedure{Revise}{CSP, $X_i$, $X_j$}\\
+    $\textbf{Input}\text{: A constraint satisfaction problem,  }\texttt{CSP = <X,D,C>}$\\
+    $\textbf{Output}\text{: returns true iff domain of $X_i$ is revised}$ \\
+    revised $\gets$ False
+    \For{\texttt{$x \in D_{i}$}}
+    \If{no value of y in $D_j$ allows (x,y) to satisfy constraints between $X_i$ and $X_j$}
+    \State delete x from $D_i$
+    \EndIf
+    \EndFor
+    \State revised $\gets$ True\\
+    \Return revised
+    \EndProcedure
+  \end{algorithmic}
+\end{algorithm}
+\subsection{AC-1}
+AC-1 is a constraint propagation algorithm that repeatedly checks for arc-consistency between two nodes and removes those values in the domain of each of the two variables that are not consistent. The algorithm is described below:
+\begin{algorithm}
+  \caption{AC-1}\label{ac1}
+  \begin{algorithmic}[1]
+    \Procedure{AC-1}{CSP}
+    \State \textbf{Input}: A constraint satisfaction problem, \texttt{CSP} $= <X,D,C>$
+    \State \textbf{Output}$\text{: CSP}^{'}$, the largest arc-consistent subset of CSP
+    \State \textbf{repeat}
+    \For{$C_{ij} \in C$}
+    \State \Call{Revise}{$X_{i},X_{j}$}
+    \State \Call{Revise}{$X_{j},X_{i}$}
+    \EndFor
+    
+    \State\textbf{until no domain is changed}
+    \EndProcedure
+  \end{algorithmic}
+\end{algorithm}
+\subsection{AC-3}
+In AC-1, the domain of a variable is changed by deleting the values in the variable's domain that are arc inconsistent with another variable. We notice that everytime the domain of the variable shrinks, some equivalent values in other variables now become inconsistent. AC-1 doesn't take advantage of this and hence it must be run iteratively until the domain of all the variables don't change. AC-3, on the contrary, tries to take advantage of this fact by using a queue that has information about the next arcs to be checked based on the modifications made in the current iteration. This leads to a much faster constraint propagation. The algorithm is described below
+\begin{algorithm}
+  \caption{AC-3}\label{ac3}
+  \begin{algorithmic}[1]
+    \Procedure{AC-3}{CSP}\\
+    \textbf{Input}: A constraint satisfaction problem, CSP = \texttt{<X,D,C>}\\
+    \textbf{Output}: $\text{CSP}^{'}$, the largest arc-consistent subset of CSP
+    \For{\texttt{$C_{ij} \in C$}}
+        \State queue $\gets$ queue $\cup \{<X_{i},X_{j}>,<X_{j},X_{i}>\}$
+    \EndFor
+    \While{queue $\neq \{\}$}
+    \State select and delete arc $<X_{i},X_{j}>$ from queue
+    \State \Call{Revise}{$X_{i},X_{j}$}
+    \If{\Call{Revise}{$X_{i},X_{j}$} caused a change in $D_{i}$}
+    \State queue $\gets$ queue $\cup\{<X_{k},X_{i}>| k\neq i, k\neq j\}$
+    \EndIf
+    \EndWhile
+    \EndProcedure
+  \end{algorithmic}
+\end{algorithm}
+
+\TODO{Specify how much better is the complexity fo constraint propagation using AC-3 slide 77}
+
+\TODO{Specify sound and completeness of arc consistency slide 78}
+
+\TODO{Precise that arc consistency does not remove out all infeasible solutions slide 79}
+
+\section{Search in CSPs}
+Constraint propagation alone is not sufficient to solve many CSPs.
+\TODO{Provide example, slide 79 seems to show a case where arc-consistency alone does not solve the problem (but I think that path consistency would do constraint propagation up to the solution...). Can we find a sudoku example where we cannot rule out all possibilities by doing constraint propagation?}
+In this case, a solution must be found using search algorithms.
+\subsection{Standard Search}
+One option would be to use standard search algorithms such as:
+\begin{itemize}
+  \item Breadth first search.
+  \item Depth first search.
+  \item Depth-limited search.
+\end{itemize}
+
+Where a \textit{state} would be a partial assignment, and an \textit{action} (operator) would be assigning a value to a variable.
+The \textit{initial state} is the one where no variable is assigned a value.
+The \textit{goal state} is the one where all variables have an assigned value, and all constraints are satisfied.
+
+\subsubsection{Complexity and Commutativity of CSPs}
+Unfortunately, given a CSP with $n$ variables with a domain size of $d$, results in a branching factor at the top level of $nd$.
+This is because any of the $n$ variables can be assigned any of $d$ values.
+Once a variable has been assigned a value, we are still left with $n-1$ variables which can be assigned $d$ values.
+By induction, we end up with a tree having $n!d^n \sim \mathcal{O}((nd)^n)$ leaves, which is even larger than the possible $d^n$ complete assignments.
+
+Nevertheless, we can observe than in a CSP the order when assigning variables does not influence the solution.
+This property is known as \textbf{commutativity}.
+More specifically, a problem is commutative if the order of application of any given set of actions does no effect on the outcome.
+Therefore, there is no need to consider all variables at each level of the search tree, but just one at a time.
+
+This makes sense intuitevely, for example, if we consider the coloring map problem, we might decide whether to color a certain region red or blue, but we would not decide between coloring one region red or another region blue.
+Therefore, the number of leaves is reduced to $d^n$, where we just have to decide on an assignment for each variable at a time.
+
+\subsection{Backtracking}
+
+Backtracking search suits the commutative property of CSPs, as it consists on a depth-first search that chooses one variable at a time.
+Moreover, it backtracks when an inconsistent partial assignment is reached.
+Although trivial, backtracking search works because any extension of an inconsistent partial assignment remains inconsistent.
+
+We show in \ref{backtracking} the actual backtracking search algorithm, as presented in \cite{russell2016artificial}.
+In plain words, the algorithm first chooses an unassigned variable, and loops over its domain by picking one value at a time.
+Every time a value is taken, if it is consistent, then the algorithm continues to look for a solution.
+If it is not consistent, then the algorithm backtracks by trying with another value instead.
+
+\begin{algorithm}
+  \caption{Backtracking-Search}
+  \label{backtracking}
+  \begin{algorithmic}[1]
+    \Function{Backtracking-Search}{\textit{csp}}
+    	\State \Return \Call{Backtrack}{\{\},\textit{csp}}
+    \EndFunction
+    
+    
+    \Function{Backtrack}{\textit{assignment}, \textit{csp}}
+    	\If{\textit{assignment} is complete} \Return \textit{assignment} \EndIf
+    	\State \textit{var} $\gets$ \Call{Select-Unassigned-Variable}{\textit{csp}, \textit{assignment}}
+    	\For{ \textbf{each} \textit{value} in \Call{Order-Domain-Values}{\textit{var}, \textit{assignment}, \textit{csp}}}
+    		\If{\textit{value} is consistent with \textit{assignment}}
+    			\State add \{\textit{var} = \textit{value}\} to \textit{assignment}
+    			\State \textit{inferences} $\gets$ \Call{Inference}{\textit{csp}, \textit{var}, \textit{assignment}}
+    			\If{\textit{inferences} $\neq$ \textit{failure}}
+    				\State add \textit{inferences} to \textit{assignment}
+    				\State \textit{result} $\gets$ \Call{Backtrack}{\textit{assignment}, \textit{csp}}
+    				\If{\textit{result} $\neq$ \textit{failure}}
+    					\State \Return \textit{result}
+    				\EndIf
+    			\EndIf
+    		\EndIf
+    		\State remove \{\textit{var} = \textit{value}\} and \textit{inferences} from \textit{assignment}
+    	\EndFor
+    	\State \Return \textbf{failure}
+    \EndFunction
+  \end{algorithmic}
+\end{algorithm}
+
+\TODO{Implement algorithm in notebook and play with different implementations of the sub-functions.
+Show practical examples for Sudoku example}
+
+The backtracking algorithm presented above makes use of a set of sub-functions that we detail below:
+\begin{itemize}
+	\item \begin{algorithmic}\Call{Select-Unassigned-Variable}{\textit{csp}, \textit{assignment}}\end{algorithmic}
+	Decides which variable should be assigned next.
+	\item \begin{algorithmic}\Call{Order-Domain-Values}{\textit{var}, \textit{assignment}, \textit{csp}}\end{algorithmic}
+	Decides the order in which the values of the variable should be tried. We will see in \cref{dynamic_variable_ordering} how modifications of this and the previous function result in different general-purpose heuristics.
+	\item \begin{algorithmic}\Call{Inference}{\textit{csp}, \textit{var}, \textit{assignment}}\end{algorithmic}
+	Every time a variable has been assigned a value, there is the opportunity to further reduce the domains of the rest of unassigned variables using inference, such as checking for arc-consistency. While the call to this function is not strictly necessary, we will see in \cref{bt_with_forward_checking} that interleaving search and inference results in a more efficient algorithm.
+\end{itemize}
+
+\subsection{Backtracking with Forward Checking}
+\label{bt_with_forward_checking}
+By modifying the call to the function \texttt{Inference} in \cref{backtracking}, we can interleave search with inference to reduce the domain of yet unassigned variables, thereby reducing the search space.
+A simple form of inference is \textbf{forward checking}, which consists in establishing arc-consistency for the recently assigned variable with respect to all connected, yet unassigned, variables.
+\TODO{Add at this point an example of forward-checking in sudoku problems}.
+
+
+\subsection{Dynamic Variable Ordering}
+\label{dynamic_variable_ordering}
+The function \texttt{Select-Unassigned-Variable} in \cref{backtracking} could be trivially set to pick the next unassigned variable in order, or alternatively pick a random variable each time.
+Nevertheless, these strategies rarely result in an efficient search.
+\TODO{Code an example where this is the case}.
+
+The \textbf{Most Constrained Variable} (MCV) heuristic. It consists in taking as next variable the one having the smallest domain. It is therefore also known as the minimum-remaining-values heuristic, or the fail-first heuristic. The advantage of using MCV is clear when we have a variable that has no legal values left, in this case, the MRV will select this variable first and failure will be detected immediately, which avoids further searches through other variables.
+
+	The MCV heuristic usually performs better than random or static ordering, sometimes by a factor of 1000 or more, although the results vary widely depending on the problem.
+\TODO{Can we show this using the Sudoku implementation?}
+
+We can also modify the function \texttt{Order-Domain-Values} in \cref{backtracking} to reach a solution faster.
+The \textbf{Least Constraining Value} (LCV) heuristic consists in taking as next value for the variable in hand the one that reduces by the least amount the domains of the neighbor variables.
+\TODO{Give Sudoku example or map coloring}.
+The heuristic is therefore just trying to leave the maximum flexibility for subsequent variable assignments.
+Note that if our objective is to list all possible solutions, this heuristic does not bring any advantage.
+
+\subsection{Conflict-directed Back Jumping}
+\TODO{Should we explain this?}
+
+\section{Local Search for CSPs (iterative repair)}
+
+\textbf{min-conflicts} heuristic. \TODO{Should we explain this?}
+
+\section{Elimination for Constraints}
+\TODO{We do not have any reference for this??}
+\subsection{Variable Elimination}
+Join and Projection operations.
+\subsection{Bucket Elimination}
+\TODO{Should we give an example, or just mention it?}
