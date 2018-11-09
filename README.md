@@ -61,6 +61,8 @@ Or if you don't want to use SSH or you don't have it setup:
 git clone https://github.com/ToniRV/Constraint-Satisfaction-Notebook.git csp_notebook
 ```
 
+Let us build the virtual environment for python, we will need to have python3 installed (which I assume you have in `/usr/local/bin/python3` but it could be somewhere else! Make sure you specify the correct path in the following command:
+```
 cd csp_notebook
 mkvirtualenv csp_notebook --python=/usr/local/bin/python3 -r requirements.txt
 ```
