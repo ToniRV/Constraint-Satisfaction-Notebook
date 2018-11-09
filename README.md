@@ -76,3 +76,4 @@ You are ready to go!
 ```
 jupyter notebook CSPs.ipynb
 ```
+Enjoy!
