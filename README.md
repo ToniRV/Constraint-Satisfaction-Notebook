@@ -29,9 +29,17 @@ https://en.wikipedia.org/wiki/Sudoku_solving_algorithms
 ## Installation
 Heavily recommended to use a virtual environment to use this setup.
 You can do that by for example using virtualenv and virtualenvwrapper.
+
 Install pip:
+
+If in Mac, do (assuming you installed brew, which you should...):
 ```
 brew install pip
+```
+
+If in Linux:
+```
+sudo apt-get install pip
 ```
 
 Install virtualenv:
