@@ -55,6 +55,12 @@ pip install virtualenvwrapper
 Now, let's clone this repo and install the necessary requirements.
 ```
 git clone git@github.com:ToniRV/Constraint-Satisfaction-Notebook.git csp_notebook
+```
+Or if you don't want to use SSH or you don't have it setup:
+```
+git clone https://github.com/ToniRV/Constraint-Satisfaction-Notebook.git csp_notebook
+```
+
 cd csp_notebook
 mkvirtualenv csp_notebook --python=/usr/local/bin/python3 -r requirements.txt
 ```
