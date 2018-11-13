@@ -62,7 +62,6 @@ class NQueensCSP():
         if var in assignment:
             del assignment[var]
 
-
     def display(self, assignment):
         """ Print the queens """
         n = len(self.vars)
@@ -76,7 +75,7 @@ class NQueensCSP():
                     ch = '-'
                 print(ch, end=" "),
             print('    ')
-
+            
 if __name__== "__main__":
     # Solve n queens.
     n_queens = NQueensCSP(15)

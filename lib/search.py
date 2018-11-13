@@ -17,14 +17,12 @@ import sys
 import bisect
 from operator import itemgetter
 
-
 infinity = float('inf')
 
 # ______________________________________________________________________________
 
 
 class Problem(object):
-
     """The abstract class for a formal problem. You should subclass
     this and implement the methods actions and result, and possibly
     __init__, goal_test, and path_cost. Then you will create instances
@@ -76,7 +74,6 @@ class Problem(object):
 
 
 class Node:
-
     """A node in a search tree. Contains a pointer to the parent (the node
     that this is a successor of) and to the actual state for this node. Note
     that if a state is arrived at by two paths, then there are two nodes with
@@ -140,7 +137,6 @@ class Node:
 
 # ______________________________________________________________________________
 
-
 class SimpleProblemSolvingAgentProgram:
 
     """Abstract framework for a problem-solving agent. [Figure 3.1]"""
@@ -178,7 +174,6 @@ class SimpleProblemSolvingAgentProgram:
 
 # ______________________________________________________________________________
 # Uninformed Search algorithms
-
 
 def breadth_first_tree_search(problem):
     """Search the shallowest nodes in the search tree first.

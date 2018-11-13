@@ -67,7 +67,6 @@ def forward_checking(csp, var, assignment):
                                 return False
     return True
 
-
 def restore_domains(csp, var):
     """ Restores the domains that a variable var pruned when doing inference """
     for (B, b) in csp.pruned[var]:
