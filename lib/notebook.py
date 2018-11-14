@@ -746,7 +746,7 @@ from ipywidgets import interact
 import ipywidgets as widgets
 from IPython.display import display
 import time
-from search import GraphProblem, romania_map
+#from search import GraphProblem, romania_map
 
 def show_map(graph_data, node_colors = None):
     G = nx.Graph(graph_data['graph_dict'])
