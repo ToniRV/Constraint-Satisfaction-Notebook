@@ -1226,8 +1226,9 @@ class NQueensProblem(Problem):
     <Node (7, 3, 0, 2, 5, 1, 6, 4)>
     """
 
-    def __init__(self, N):
+    def __init__(self, N, pruning=True):
         self.N = N
+        self.pruning = pruning
         self.initial = tuple([-1] * N)
         Problem.__init__(self, self.initial)
 
@@ -1237,8 +1238,7 @@ class NQueensProblem(Problem):
             return []  # All columns filled; no successors
         else:
             col = state.index(-1)
-            return [row for row in range(self.N)
-                    if not self.conflicted(state, row, col)]
+            return [row for row in range(self.N) if not self.pruning or not self.conflicted(state, row, col)]
 
     def result(self, state, row):
         """Place the next queen at the given row."""
