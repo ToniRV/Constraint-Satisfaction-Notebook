@@ -61,20 +61,6 @@ class NQueensCSP():
         """ Remove {var: val} from assignment; that is backtrack. """
         if var in assignment:
             del assignment[var]
-
-    def display(self, assignment):
-        """ Print the queens """
-        n = len(self.vars)
-        for val in range(n):
-            for var in range(n):
-                if assignment.get(var,'') == val:
-                    ch ='Q'
-                elif (var + val) % 2 == 0:
-                    ch = '.'
-                else:
-                    ch = '-'
-                print(ch, end=" "),
-            print('    ')
             
 if __name__== "__main__":
     # Solve n queens.

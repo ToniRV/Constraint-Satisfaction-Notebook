@@ -895,27 +895,55 @@ def display_visual(graph_data, user_input, algorithm=None, problem=None):
         display(slider_visual)
 
 
+import numpy as np
+
+from matplotlib.patches import Circle
+from matplotlib.offsetbox import (TextArea, DrawingArea, OffsetImage,
+                                  AnnotationBbox)
+from matplotlib.cbook import get_sample_data
+
 # Function to plot NQueensCSP in csp.py and NQueensProblem in search.py
 def plot_NQueens(solution):
     n = len(solution)
     board = np.array([2 * int((i + j) % 2) for j in range(n) for i in range(n)]).reshape((n, n))        
+    print(board)
     im = Image.open('images/queen_s.png')
+    width = im.size[0]
     height = im.size[1]
+    dpi = 100
+    fig_size = 7
+    fig = plt.figure(figsize=(fig_size, fig_size), dpi=dpi)
+    scale = fig_size*dpi/n
+    print("Scale is: ", scale)
+    print("Old height was: ", height)
+    print("New height is: ", int(height*scale))
     im = np.array(im).astype(np.float) / 255
-    fig = plt.figure(figsize=(7, 7))
     ax = fig.add_subplot(111)
     ax.set_title('{} Queens'.format(n))
     plt.imshow(board, cmap='binary', interpolation='nearest')
     # NQueensCSP gives a solution as a dictionary
+    im_scale = 0.80
+    im_size = 1/n
+    im_width = im_size*im_scale
+    im_height = im_size*im_scale
     if isinstance(solution, dict):
         for (k, v) in solution.items():
-            newax = fig.add_axes([0.064 + (k * 0.112), 0.062 + ((7 - v) * 0.112), 0.1, 0.1], zorder=1)
-            newax.imshow(im)
-            newax.axis('off')
+            off_im = OffsetImage(im, zoom=1/n)
+            off_im.image.axes = ax
+            xy = [k, v]
+            ab = AnnotationBbox(off_im, xy,
+                                xybox=(0, 0),
+                                frameon=False,
+                                xycoords='data',
+                                boxcoords="offset points",
+                                pad=0.3,
+                                arrowprops=dict(arrowstyle="->"))
+
+            ax.add_artist(ab)
     # NQueensProblem gives a solution as a list
     elif isinstance(solution, list):
         for (k, v) in enumerate(solution):
-            newax = fig.add_axes([0.064 + (k * 0.112), 0.062 + ((7 - v) * 0.112), 0.1, 0.1], zorder=1)
+            newax = fig.add_axes([0.064 + (k * 0.112), 0.062 + ((fig_size - v) * 0.112), 0.1, 0.1], zorder=1)
             newax.imshow(im)
             newax.axis('off')
     fig.tight_layout()

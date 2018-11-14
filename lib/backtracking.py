@@ -16,12 +16,12 @@ def backtrack(assignment, csp):
     # Loop over the domain of the current variable.
     for val in order_domain_values(var, assignment, csp):
         # If value is consistent with assignment, continue.
-        if csp.is_consistent(var, val, assignment) == True:
+        if csp.is_consistent(var, val, assignment):
             # Assign the value to the variable.
             csp.assign(var, val, assignment)
             # If we do not use forward checking, we are good!
             # If we do forward checking, prune domains, and continue only if no domain is empty.
-            if inference(csp, var, assignment) == True:
+            if inference(csp, var, assignment):
                 # Calculate next result (recursive call).
                 result = backtrack(assignment, csp)
                 if result is not None:
