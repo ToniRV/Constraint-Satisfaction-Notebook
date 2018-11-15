@@ -68,6 +68,11 @@ class CSP(search.Problem):
         just call assign for that."""
         if var in assignment:
             del assignment[var]
+            
+    def is_consistent(self, var, val, assignment):
+        """Return if var=val conflicts with other variables."""
+        # Subclasses may implement this more efficiently
+        return self.nconflicts(var, val, assignment) == 0
 
     def nconflicts(self, var, val, assignment):
         """Return the number of conflicts var=val has with other variables."""

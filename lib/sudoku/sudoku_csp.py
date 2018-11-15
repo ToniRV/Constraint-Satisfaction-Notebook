@@ -1,14 +1,9 @@
 from lib.csp import CSP
 
 from functools import reduce
-
 import itertools
 import re
 import random
-
-# ______________________________________________________________________________
-# Sudoku
-
 
 def flatten(seqs):
     return sum(seqs, [])
@@ -16,8 +11,6 @@ def flatten(seqs):
 def different_values_constraint(A, a, B, b):
     """A constraint saying two neighboring variables must differ in value."""
     return a != b
-
-
 
 easy1 = '..3.2.6..9..3.5..1..18.64....81.29..7.......8..67.82....26.95..8..2.3..9..5.1.3..'
 harder1 = '4173698.5.3..........7......2.....6.....8.4......1.......6.3.7.5..2.....1.4......'
@@ -34,6 +27,8 @@ for unit in map(set, _BOXES + _ROWS + _COLS):
     for v in unit:
         _NEIGHBORS[v].update(unit - {v})
 
+# ______________________________________________________________________________
+# Sudoku
 class Sudoku(CSP):
     """A Sudoku problem.
     The box grid is a 3x3 array of boxes, each a 3x3 array of cells.
@@ -87,6 +82,12 @@ class Sudoku(CSP):
                    for var, ch in zip(flatten(self.rows), squares)}
         for _ in squares:
             raise ValueError("Not a Sudoku grid", grid)  # Too many squares
+            
+        # Pruned B=b pairs due to a given A=a assignment.
+        # Used to restore domains if an assignment gets backtracked.
+        # {A:[(B, b1), (B, b2), (C, c3)], B: [(C, c1)], ...}
+        self.pruned = {var:[] for var in domains.keys()}
+        
         CSP.__init__(self, None, domains, self.neighbors, different_values_constraint)
 
     def display(self, assignment):
@@ -94,8 +95,6 @@ class Sudoku(CSP):
 
         def show_cell(cell): return str(assignment.get(cell, '.'))
 
-        def abut(lines1, lines2): return list(
-            map(' | '.join, list(zip(lines1, lines2))))
-        print('\n------+-------+------\n'.join(
-            '\n'.join(reduce(
-                abut, map(show_box, brow))) for brow in self.bgrid))
+        def abut(lines1, lines2): return list(map(' | '.join, list(zip(lines1, lines2))))
+        
+        print('\n------+-------+------\n'.join('\n'.join(reduce(abut, map(show_box, brow))) for brow in self.bgrid))

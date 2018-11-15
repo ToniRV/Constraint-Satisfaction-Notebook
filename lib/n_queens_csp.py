@@ -24,15 +24,17 @@ class NQueensCSP():
     def __init__(self, n):
         """Initialize data structures for n Queens."""
         # Indices of variables in the problem.
-        self.vars = list(range(n))
+        self.variables = list(range(n))
         # Initial domains of the variables.
-        self.domains = {var:list(range(n)) for var in self.vars}
+        self.domains = {var:list(range(n)) for var in self.variables}
+        # What are the neighbors of a given var, can include itself.
+        self.neighbors = {var:list(range(n)) for var in self.variables}
         # Current domains of the variables after pruning, only used for forward checking.
-        self.curr_domains = {var:list(range(n)) for var in self.vars}
+        self.curr_domains = {var:list(range(n)) for var in self.variables}
         # Pruned B=b pairs due to a given A=a assignment.
         # Used to restore domains if an assignment gets backtracked.
         # {A:[(B, b1), (B, b2), (C, c3)], B: [(C, c1)], ...}
-        self.pruned = {var:[] for var in self.vars}
+        self.pruned = {var:[] for var in self.variables}
         # Store constraints that a pair of variables should satisfy.
         self.constraints = queen_constraint
 
@@ -52,6 +54,13 @@ class NQueensCSP():
         c_diag_2 = all_different(diag_2)
 
         return c_row and c_diag_1 and c_diag_2
+    
+    # For compatibility with CSP
+    def support_pruning(self):
+        """Make sure we can prune values from domains. (We want to pay
+        for this only if we use it.)"""
+        if self.curr_domains is None:
+            self.curr_domains = {v: list(self.domains[v]) for v in self.variables}
 
     def assign(self, var, val, assignment):
         """ Add {var: val} to assignment, discards the old value if any. """
@@ -61,6 +70,7 @@ class NQueensCSP():
         """ Remove {var: val} from assignment; that is backtrack. """
         if var in assignment:
             del assignment[var]
+            
             
 if __name__== "__main__":
     # Solve n queens.
