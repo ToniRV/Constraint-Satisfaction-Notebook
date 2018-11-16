@@ -6,7 +6,7 @@ from lib.constraint_propagation import AC3
 # INFERENCE
 def no_inference(csp, var, assignment, removals):
     """ If we do not implement an inference algorithm, just return that everything is ok."""
-    return True, None
+    return True
 
 def forward_checking(csp, var, assignment, removals):
     """ Prunes the domains by applying arc-consistency between a var and its neighbors """
@@ -26,8 +26,8 @@ def forward_checking(csp, var, assignment, removals):
                     # We got an empty domain!
                     if len(csp.curr_domains[B]) == 0:
                         # var = val is not arc-consistent!
-                        return False, B
-    return True, None
+                        return False
+    return True
 
 def restore_domains(csp, var):
     """ Restores the domains that a variable var pruned when doing inference """
@@ -37,7 +37,7 @@ def restore_domains(csp, var):
     
 def mac(csp, var, assignment, removals):
     """Maintain arc consistency."""
-    return AC3(csp, [(X, var) for X in csp.neighbors[var]], removals), None
+    return AC3(csp, [(X, var) for X in csp.neighbors[var]], removals)
 
 #--------------------------------------------------------------------------------------------#
 # SELECT_UNASSIGNED_VARIABLE
@@ -97,8 +97,8 @@ def backtracking_search(csp, select_unassigned_variable = first_unassigned_varia
                 # If we do not use forward checking, we are good!
                 # If we do forward checking, prune domains, and continue only if no domain is empty.
                 removals = csp.suppose(var, val)
-                infer, offensive_var = inference(csp, var, assignment, removals)
-                csp.track_pruned_domain_for_display(infer, offensive_var)
+                infer = inference(csp, var, assignment, removals)
+                csp.track_pruned_domain_for_display()
                 if infer:
                     # Calculate next result (recursive call).
                     result = backtrack(assignment, csp)

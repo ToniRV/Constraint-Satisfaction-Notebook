@@ -40,13 +40,13 @@ class InstruCSP(NQueensCSP):
         #super().assign(var, val, assignment)
         #self.assignment_history.append(copy.deepcopy(assignment))
         
-    def track_pruned_domain_for_display(self, infer, offensive_var):
+    def track_pruned_domain_for_display(self):
         pruned_domains = copy.deepcopy(self.domains)
         for var, values in self.curr_domains.items():
             for val in values:
                 pruned_domains[var].remove(val)
         self.assignment_history[-1] = [self.assignment_history[-1][0], pruned_domains]
-        return super().track_pruned_domain_for_display(infer, offensive_var)
+        return super().track_pruned_domain_for_display()
     
     def unassign(self, var, assignment):
         super().unassign(var, assignment)

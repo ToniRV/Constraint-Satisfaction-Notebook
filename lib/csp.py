@@ -155,5 +155,5 @@ class CSP(search.Problem):
         return [var for var in self.variables
                 if self.nconflicts(var, current[var], current) > 0]
     
-    def track_pruned_domain_for_display(self, infer, offensive_var):
+    def track_pruned_domain_for_display(self):
         return
