@@ -1,14 +1,17 @@
 from __future__ import print_function
 from lib.utils import argmin_random_tie, count, first
+from lib.constraint_propagation import AC3
 
 #--------------------------------------------------------------------------------------------#
 # INFERENCE
-def no_inference(csp, var, assignment):
+def no_inference(csp, var, assignment, removals):
     """ If we do not implement an inference algorithm, just return that everything is ok."""
     return True
 
-def forward_checking(csp, var, assignment):
+def forward_checking(csp, var, assignment, removals):
     """ Prunes the domains by applying arc-consistency between a var and its neighbors """
+    #from IPython.core.debugger import set_trace
+    #set_trace()
     csp.support_pruning()
     # Get val.
     val = assignment[var]
@@ -16,14 +19,10 @@ def forward_checking(csp, var, assignment):
     for B in csp.neighbors[var]:
         if B not in assignment:
             # Loop over values in the current domain of B.
-            for b in csp.curr_domains[B]:
+            for b in csp.curr_domains[B][:]: # Iterate over a copy of the list (thereby the [:])
                 # If B = b is not consistent with var = val.
                 if not csp.constraints(var, val, B, b):
-                    # Remove b from B's domain.
-                    csp.curr_domains[B].remove(b)
-                    # Store pruned value from B's domain, used to restore domain
-                    # in case of backtracking.
-                    csp.pruned[var].append((B, b))
+                    csp.prune(B, b, removals)
                     # We got an empty domain!
                     if len(csp.curr_domains[B]) == 0:
                         # var = val is not arc-consistent!
@@ -35,6 +34,10 @@ def restore_domains(csp, var):
     for (B, b) in csp.pruned[var]:
         csp.curr_domains[B].append(b)
     csp.pruned[var] = []
+    
+def mac(csp, var, assignment, removals):
+    """Maintain arc consistency."""
+    return AC3(csp, [(X, var) for X in csp.neighbors[var]], removals)
 
 #--------------------------------------------------------------------------------------------#
 # SELECT_UNASSIGNED_VARIABLE
@@ -58,20 +61,22 @@ def num_legal_values(csp, var, assignment):
         
 #--------------------------------------------------------------------------------------------#
 # ORDER_DOMAIN_VALUES
-def default_domain_order(var, assignment, csp):
-    """ Decide what order to consider the domain variables. """
-    # Just give the domain as it is, default is in order.
-    if csp.curr_domains:
-        domain = csp.curr_domains[var]
-    else:
-        domain = csp.domains[var]
-    return domain
+def unordered_domain_values(var, assignment, csp):
+    """The default value order."""
+    return csp.choices(var)
+
+
+def lcv(var, assignment, csp):
+    """Least-constraining-values heuristic."""
+    return sorted(csp.choices(var),
+                  key=lambda val: csp.nconflicts(var, val, assignment))
+
 
 #--------------------------------------------------------------------------------------------#
 #--------------------------------------------------------------------------------------------#
 # Backtracking Algorithm
 def backtracking_search(csp, select_unassigned_variable = first_unassigned_variable,
-                        order_domain_values = default_domain_order,
+                        order_domain_values = unordered_domain_values,
                         inference = no_inference):
     """ Backtracking search as detailed in Fig. 6.5 of AIMA book. """
     
@@ -91,19 +96,22 @@ def backtracking_search(csp, select_unassigned_variable = first_unassigned_varia
                 csp.assign(var, val, assignment)
                 # If we do not use forward checking, we are good!
                 # If we do forward checking, prune domains, and continue only if no domain is empty.
-                if inference(csp, var, assignment):
+                removals = csp.suppose(var, val)
+                infer = inference(csp, var, assignment, removals)
+                csp.track_pruned_domain_for_display()
+                if infer:
                     # Calculate next result (recursive call).
                     result = backtrack(assignment, csp)
                     if result is not None:
                         return result
-            # If we have a conflict, unassign.
-            # If we use forward checking, restore domains pruned by this assignment var=val.
-            csp.unassign(var, assignment) # could be done outside the for loop...
-            if  inference.__code__.co_code != no_inference.__code__.co_code:
-                # Restore prunings from previous value of var
-                restore_domains(csp, var)
+                csp.restore(removals)
+                # If we have a conflict, unassign.
+                # If we use forward checking, restore domains pruned by this assignment var=val.
+                csp.unassign(var, assignment) # could be done outside the for loop...
         return None
     
     # Start backtracking
-    return backtrack({}, csp)
+    result = backtrack({}, csp)
+    assert result is None or csp.goal_test(result)
+    return result
 

@@ -1,6 +1,8 @@
 from __future__ import print_function
 import time
+import copy
 from lib.backtracking import backtracking_search
+from lib.csp import CSP
 
 def queen_constraint(A, a, B, b):
     """Constraint is satisfied (true) if A, B are really the same variable,
@@ -18,32 +20,28 @@ def all_different(L):
             return False
     return True
 
-class NQueensCSP():
+class NQueensCSP(CSP):
     """Make a CSP for the nQueens problem for search with backtracking """
 
     def __init__(self, n):
         """Initialize data structures for n Queens."""
         # Indices of variables in the problem.
-        self.variables = list(range(n))
+        variables = list(range(n))
         # Initial domains of the variables.
-        self.domains = {var:list(range(n)) for var in self.variables}
+        domains = {var:list(range(n)) for var in variables}
         # What are the neighbors of a given var, can include itself.
-        self.neighbors = {var:list(range(n)) for var in self.variables}
-        # Current domains of the variables after pruning, only used for forward checking.
-        self.curr_domains = {var:list(range(n)) for var in self.variables}
-        # Pruned B=b pairs due to a given A=a assignment.
-        # Used to restore domains if an assignment gets backtracked.
-        # {A:[(B, b1), (B, b2), (C, c3)], B: [(C, c1)], ...}
-        self.pruned = {var:[] for var in self.variables}
-        # Store constraints that a pair of variables should satisfy.
-        self.constraints = queen_constraint
+        neighbors = {var:list(range(n)) for var in variables}
+        
+        CSP.__init__(self, variables, domains, neighbors, queen_constraint)
+    
 
     def is_consistent(self, var, val, assignment):
         """ Check if the attempted var = val assignment is consistent with current assignment """
         # Add var = val in the list of assignments as a first attempt.
         # Slow because we are copying, but perfect for pedagogical purposes.
-        attempt_assignment = {var: val}
-        attempt_assignment.update(assignment)
+        attempt_assignment = copy.deepcopy(assignment)
+        if var != None and val != None:
+            attempt_assignment.update({var: val})
         # Check for same column constraint is implicit in formulation.
         # Check for same row constraint:
         c_row = all_different(attempt_assignment.values())
@@ -54,23 +52,6 @@ class NQueensCSP():
         c_diag_2 = all_different(diag_2)
 
         return c_row and c_diag_1 and c_diag_2
-    
-    # For compatibility with CSP
-    def support_pruning(self):
-        """Make sure we can prune values from domains. (We want to pay
-        for this only if we use it.)"""
-        if self.curr_domains is None:
-            self.curr_domains = {v: list(self.domains[v]) for v in self.variables}
-
-    def assign(self, var, val, assignment):
-        """ Add {var: val} to assignment, discards the old value if any. """
-        assignment[var] = val
-
-    def unassign(self, var, assignment):
-        """ Remove {var: val} from assignment; that is backtrack. """
-        if var in assignment:
-            del assignment[var]
-            
             
 if __name__== "__main__":
     # Solve n queens.

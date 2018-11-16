@@ -251,7 +251,7 @@ def display_visual(graph_data, user_input, algorithm=None, problem=None):
         display(slider_visual)
 
 # Function to plot NQueensCSP in csp.py and NQueensProblem in search.py
-def plot_NQueens(partial_assignment, n = -1, grid = None, cmap = 'binary', norm = None):
+def plot_NQueens(partial_assignment, pruned_domains = None, n = -1, grid = None, cmap = 'binary', norm = None):
     ''' Plot a checkerboard with Queens placed on it.
         partial_assignment is a dict or a list specifying the rows of the Queens on the board on each column.
         n is the size of the board, if n is less than 0, then we assume the board is the size of the partial_assignment.
@@ -277,6 +277,8 @@ def plot_NQueens(partial_assignment, n = -1, grid = None, cmap = 'binary', norm 
     # Get Queen image.
     im = Image.open('images/queen_s.png')
     im = np.array(im).astype(np.float) / 255
+    im_x = Image.open('images/x.png')
+    im_x = np.array(im_x).astype(np.float) / 255
     
     # Internal function to plot the image of a queen inside the board.
     def plot_image_on_axis(ax, im, zoom, x, y):
@@ -296,6 +298,10 @@ def plot_NQueens(partial_assignment, n = -1, grid = None, cmap = 'binary', norm 
     if isinstance(partial_assignment, dict):
         for (k, v) in partial_assignment.items():
             plot_image_on_axis(ax, im, 1/n, k, v)
+        if pruned_domains:
+            for (k, values) in pruned_domains.items():
+                for v in values:
+                    plot_image_on_axis(ax, im_x, 0.5*1/n, k, v)
     # If NQueensProblem gives a partial_assignment as a list
     elif isinstance(partial_assignment, list):
         for (k, v) in enumerate(partial_assignment):

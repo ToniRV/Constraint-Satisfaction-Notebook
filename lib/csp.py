@@ -154,3 +154,6 @@ class CSP(search.Problem):
         """Return a list of variables in current assignment that are in conflict"""
         return [var for var in self.variables
                 if self.nconflicts(var, current[var], current) > 0]
+    
+    def track_pruned_domain_for_display(self):
+        return
