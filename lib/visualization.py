@@ -40,13 +40,13 @@ class InstruCSP(NQueensCSP):
         #super().assign(var, val, assignment)
         #self.assignment_history.append(copy.deepcopy(assignment))
         
-    def track_pruned_domain_for_display(self):
+    def track_pruned_domain_for_display(self, infer, offensive_var):
         pruned_domains = copy.deepcopy(self.domains)
         for var, values in self.curr_domains.items():
             for val in values:
                 pruned_domains[var].remove(val)
         self.assignment_history[-1] = [self.assignment_history[-1][0], pruned_domains]
-        return super().track_pruned_domain_for_display()
+        return super().track_pruned_domain_for_display(infer, offensive_var)
     
     def unassign(self, var, assignment):
         super().unassign(var, assignment)
@@ -77,6 +77,17 @@ def label_queen_conflicts(assignment,grid):
 
     return grid
 
+def label_empty_domains(pruned_domains,grid):
+    ''' Mark grid with queens that are under conflict. '''
+    for var, values in pruned_domains.items():
+        if len(values) == len(grid):
+            # Place a 3 in positions where this is a conflict
+            for val in values:
+                grid[val][var] = 2
+
+    return grid
+
+
 def make_plot_board_step_function(instru_csp):
     '''ipywidgets interactive function supports
        single parameter as input. This function
@@ -92,9 +103,10 @@ def make_plot_board_step_function(instru_csp):
         
         grid = [[(col+row+1)%2 for col in range(n)] for row in range(n)]
         grid = label_queen_conflicts(dict(data[0]), grid) # Update grid with conflict labels.
+        grid = label_empty_domains(dict(data[1]), grid) # Update grid with conflict labels.
         # color map of fixed colors
-        cmap = matplotlib.colors.ListedColormap(['white','black','red'])
-        bounds=[0,1,2,3] # 0 for white 1 for black 2 onwards for conflict labels (red).
+        cmap = matplotlib.colors.ListedColormap(['white','black','yellow','red'])
+        bounds=[0,1,2,3,4] # 0 for white 1 for black 2 onwards for conflict labels (yellow for domain empty, red for conflict).
         norm = matplotlib.colors.BoundaryNorm(bounds, cmap.N)
         
         plot_NQueens(data[0], data[1], n, grid, cmap, norm)
