@@ -2,6 +2,7 @@
 # Constraint Propagation with AC-3
 import lib.csp
 import time
+import matplotlib.pyplot as plt
 def AC3(csp, queue=None, removals=None):
     """[Figure 6.3]"""
     if queue is None:
