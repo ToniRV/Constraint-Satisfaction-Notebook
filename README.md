@@ -1,30 +1,66 @@
 # Constraint-Satisfaction-Notebook
-Example lecture for Constraint Satisfaction Problems in an interactive jupyter notebook style.
+Example lecture for **Constraint Satisfaction Problems** (CSP) in an interactive jupyter notebook.
+We present multiple algorithms to solve CSPs and we explain the inner workings of these algorithms.
+For example, we show how to solve NQueens problem using backtracking with forward checking or with Maintaining Arc Consistency algorithm.
 
--- Let us look first at already coded examples, there are many: just add the links here:
-https://www.geeksforgeeks.org/sudoku-backtracking-7/
-https://www.geeksforgeeks.org/m-coloring-problem-backtracking-5/
-http://www.angusj.com/sudoku/hints.php
+![example_output](images/example_output.png)
 
+Example of visualization tool in jupyter notebook to explain backtracking with forward checking:
 
-These slides look very similar to what Brian Williams uses:
-http://gki.informatik.uni-freiburg.de/teaching/ss12/csp/csp04-handout.pdf
+![example_output](images/example_output.gif)
 
+# CONTENTS
 
-Norvig’s
-http://norvig.com/sudoku.html
+ 1. [**Introduction to Constraint Propagation Problems (L13 & L14)**](#Intro):
+    1. *Definition*
+    2. *Examples*
 
+ 2. [**Solving CSPs (L14 & L 15)**](#Constraint_Propagation):
+    1. *Constraint Propagation in CSPs*:
+        1. Propagation:
+            1. [AC-1](#ac1):
+                * Definition
+                * Example: solving Sudoku with AC-1
+            2. [AC-3](#ac3):
+                * Definition
+                * Example: solving Sudoku with AC-3
+    2. *[Search in CSPs](#search_in_csps)*:
+        1. [Generic Search](#generic_search):
+            * Formulating CSPs as a state space search problem
+            * Complexity
+            * Example: NQueens with generic search (5 Queens)
+        2. [Backtracking Search (BT)](#backtracking):
+            * Definition
+            * Complexity
+            * Example: solving NQueens (15 Queens)
+        3. [Backtracking Search with Forward Checking (BT-FC)](#backtracking_w_fc):
+            * Definition
+            * Complexity
+            * Example: solving NQueens (20 Queens)              
+        4. [Backtracking while Maintaining Arc Consistency (BT-MAC)](#backtracking_w_mac):
+            * Definition
+            * Complexity
+            * Example: solving NQueens (20 Queens)
+        4. BT-DC with Dynamic Variable Ordering:
+            * Definition
+            * Complexity
+            * Example: solving NQueens (1000 Queens)
 
-https://en.wikipedia.org/wiki/Sudoku_solving_algorithms
+    3. *Elimination for Constraints in CSPs*:
+        1. Variable Elimination for Constraints:
+            * Definition: join and project
+            * Example
+        2. Bucket elimination (Adaptive Consistency):
+            * Definition
+            * Example
 
-
-## Utility functions:
-1- Plotting the Sudoku
-2- Representation of State and Domains
-
-## Algorithms:
-1- Extract common functions that we can use for all algorithms.
-2- 
+ 3. **Appendix**:
+    1. Constraint Optimization Problem:
+        1. Branch-and-Bound
+        2. Example: using Map Coloring problem with cost added to the colors to use.
+    2. Incremental Repair / Iterative Repair / Min-Conflict Heuristic
+        * Definition
+        * Example
 
 ## Installation
 Heavily recommended to use a virtual environment to use this setup.
