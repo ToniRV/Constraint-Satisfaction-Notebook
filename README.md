@@ -19,36 +19,37 @@ We also present how to solve Sudoku problems, both using constraint propagation 
     1. *Definition*
     2. *Examples*
 
- 2. [**Solving CSPs (L14 & L 15)**](#Constraint_Propagation):
-    1. *Constraint Propagation in CSPs*:
-        1. Propagation:
-            1. [AC-1](#ac1):
-                * Definition
-                * Example: solving Sudoku with AC-1
-            2. [AC-3](#ac3):
-                * Definition
-                * Example: solving Sudoku with AC-3
+ 2. [**Solving CSPs (L14 & L15)**](#solving_csps) :
+    1. [*Constraint Propagation in CSPs*](#Constraint_Propagation):
+        1. [AC-1](#ac1):
+            * [Definition](#ac1_definition)
+            * [Complexity analysis](#ac1_complexity)
+            * [Example: solving Sudoku with AC-1](#ac1_example)
+        2. [AC-3](#ac3):
+            * [Definition](#ac3_definition)
+            * [Complexity analysis](#ac3_complexity)
+            * [Example: solving Sudoku with AC-3](#ac3_example)
     2. *[Search in CSPs](#search_in_csps)*:
         1. [Generic Search](#generic_search):
-            * Formulating CSPs as a state space search problem
-            * Complexity
-            * Example: NQueens with generic search (5 Queens)
+            * [Formulating CSPs as a state space search problem](#generic_search_definition)
+            * [Complexity](#generic_search_complexity)
+            * [Example: NQueens with generic search (5 Queens)](#generic_search_example)
         2. [Backtracking Search (BT)](#backtracking):
-            * Definition
-            * Complexity
-            * Example: solving NQueens (15 Queens)
+            * [Definition](#backtracking_definition)
+            * [Complexity](#backtracking_complexity)
+            * [Example: solving NQueens (15 Queens)](#backtracking_example)
         3. [Backtracking Search with Forward Checking (BT-FC)](#backtracking_w_fc):
-            * Definition
-            * Complexity
-            * Example: solving NQueens (20 Queens)              
-        4. [Backtracking while Maintaining Arc Consistency (BT-MAC)](#backtracking_w_mac):
-            * Definition
-            * Complexity
-            * Example: solving NQueens (20 Queens)
-        4. BT-DC with Dynamic Variable Ordering:
-            * Definition
-            * Complexity
-            * Example: solving NQueens (1000 Queens)
+            * [Definition](#bt_fc_definition)
+            * [Complexity](#bt_fc_complexity)
+            * [Example: solving NQueens (20 Queens)](#bt_fc_example)         
+        4. [**Backtracking while Maintaining Arc Consistency (BT-MAC)**](#backtracking_w_mac):
+            * [Definition](#bt_mac_definition)
+            * [Complexity](#bt_mac_complexity)
+            * [Example: solving NQueens (20 Queens)](#bt_mac_example)
+        4. [Backtracking with Dynamic Variable Ordering](#bt_dvo):
+            * [Definition](#bt_dvo_definition)
+            * [Complexity](#bt_dvo_complexity)
+            * [Example: solving NQueens (40 Queens)](#bt_dvo_example)
 
     3. *Elimination for Constraints in CSPs*:
         1. Variable Elimination for Constraints:
