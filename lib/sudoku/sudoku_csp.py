@@ -4,6 +4,8 @@ from functools import reduce
 import itertools
 import re
 import random
+import matplotlib.pyplot as plt
+import numpy as np
 
 def flatten(seqs):
     return sum(seqs, [])
@@ -91,10 +93,22 @@ class Sudoku(CSP):
         CSP.__init__(self, None, domains, self.neighbors, different_values_constraint)
 
     def display(self, assignment):
-        def show_box(box): return [' '.join(map(show_cell, row)) for row in box]
+        n = 9
+        fig_size = 7
+        fig = plt.figure(figsize=(fig_size, fig_size))
+        ax = fig.add_subplot(111)
+        board = np.array([0.5 * int((i + j)% 2) for j in range(n) for i in range(n)]).reshape((n, n))
+        a = plt.imshow(board, cmap='Pastel1',interpolation='nearest')
 
-        def show_cell(cell): return str(assignment.get(cell, '.'))
 
-        def abut(lines1, lines2): return list(map(' | '.join, list(zip(lines1, lines2))))
-        
-        print('\n------+-------+------\n'.join('\n'.join(reduce(abut, map(show_box, brow))) for brow in self.bgrid))
+        ax.set_xticks(np.arange(-0.5, 7.5, 3))
+        ax.set_yticks(np.arange(-0.5, 7.5, 3))
+        plt.grid(color='black')
+
+        ax.tick_params(axis=u'both', which=u'both',length=0)
+
+        for i in assignment:
+            plt.text(3*int((i%27)/9)+(i%9)%3,3*int(i/27)+int((i%9)/3),assignment[i], ha="center", va="center",fontsize=15)
+        a.axes.get_xaxis().set_ticklabels([])
+        a.axes.get_yaxis().set_ticklabels([])
+        plt.show()
