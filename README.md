@@ -1,13 +1,16 @@
 # Constraint-Satisfaction-Notebook
 Example lecture for **Constraint Satisfaction Problems** (CSP) in an interactive jupyter notebook.
 We present multiple algorithms to solve CSPs and we explain the inner workings of these algorithms.
-For example, we show how to solve NQueens problem using backtracking with forward checking or with Maintaining Arc Consistency algorithm.
+For example, we show how to solve NQueens problem using backtracking with forward checking or with Maintaining-Arc-Consistency algorithm.
 
 ![example_output](images/example_output.png)
 
 Example of visualization tool in jupyter notebook to explain backtracking with forward checking:
 
 ![example_output](images/example_output.gif)
+
+We also present how to solve Sudoku problems, both using constraint propagation algorithms (AC1 & AC3), as well as backtracking with Minimum-Remaining-Value heuristic and Maintaining-Arc-Consistency algorithm:
+
 
 # CONTENTS
 
