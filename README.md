@@ -5,6 +5,9 @@ For example, we show how to solve NQueens problem using backtracking with forwar
 
 ![example_output](images/example_output.png)
 
+Example of visualization tool in jupyter notebook to explain backtracking with forward checking:
+
+![example_output](images/example_output.gif)
 
 # CONTENTS
 
