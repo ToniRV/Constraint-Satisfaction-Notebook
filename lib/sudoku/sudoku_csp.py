@@ -93,6 +93,13 @@ class Sudoku(CSP):
         CSP.__init__(self, None, domains, self.neighbors, different_values_constraint)
 
     def display(self, assignment):
+#         def show_box(box): return [' '.join(map(show_cell, row)) for row in box]
+
+#         def show_cell(cell): return str(assignment.get(cell, '.'))
+
+#         def abut(lines1, lines2): return list(map(' | '.join, list(zip(lines1, lines2))))
+        
+#         print('\n------+-------+------\n'.join('\n'.join(reduce(abut, map(show_box, brow))) for brow in self.bgrid))
         n = 9
         fig_size = 7
         fig = plt.figure(figsize=(fig_size, fig_size))
