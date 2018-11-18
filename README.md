@@ -11,7 +11,7 @@ Example of visualization tool in jupyter notebook to explain backtracking with f
 
 We also present how to solve Sudoku problems, both using constraint propagation algorithms (AC1 & AC3), as well as backtracking with Minimum-Remaining-Value heuristic and Maintaining-Arc-Consistency algorithm:
 
-|![example_output_sudoku](images/sudoku_unsolved.png)  |    ![example_output_sudoku](images/sudoku_solved.png)|
+![example_output_sudoku](images/sudoku_unsolved.png)      ![example_output_sudoku](images/sudoku_solved.png)
 
 # CONTENTS
 
