@@ -113,16 +113,31 @@ def make_plot_board_step_function(instru_csp):
     
     return plot_board_step
 
-def make_visualize(slider):
-    ''' Takes an input a slider and returns 
+def make_visualize(slider, visualize_button):
+    ''' Takes as input a slider and returns 
         callback function for timer and animation
     '''
     
     def visualize_callback(Visualize, time_step):
-        if Visualize is True:
-            for i in range(slider.min, slider.max + 1):
-                slider.value = i
-                time.sleep(float(time_step))
+        i = slider.min
+        while Visualize is True and i < slider.max + 1:
+            slider.value = i
+            i += 1
+            time.sleep(float(time_step))      
     
     return visualize_callback
-    
+
+def display_nqueens(backtracking_instru_queen, result):
+    backtrack_queen_step = make_plot_board_step_function(backtracking_instru_queen) # Step Function for Widgets
+
+    iteration_slider = widgets.IntSlider(min=0, max=len(backtracking_instru_queen.assignment_history)-1, step=1, value=0)
+    w = widgets.interactive(backtrack_queen_step,iteration=iteration_slider)
+    display(w)
+
+    #visualize_button = widgets.ToggleButton(description = "Visualize", value = False)
+    #visualize_callback = make_visualize(iteration_slider, visualize_button)
+
+    #time_select = widgets.ToggleButtons(description='Extra Delay:', options=['0', '0.1', '0.2', '0.5', '0.7', '1.0'])
+
+    #a = widgets.interactive(visualize_callback, Visualize = visualize_button, time_step = time_select)
+    #display(a)
