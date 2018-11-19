@@ -68,7 +68,7 @@ class CSP(search.Problem):
         just call assign for that."""
         if var in assignment:
             del assignment[var]
-            
+
     def is_consistent(self, var, val, assignment):
         """Return if var=val conflicts with other variables."""
         # Subclasses may implement this more efficiently
@@ -154,6 +154,7 @@ class CSP(search.Problem):
         """Return a list of variables in current assignment that are in conflict"""
         return [var for var in self.variables
                 if self.nconflicts(var, current[var], current) > 0]
-    
+
+    # Only used for tracking pruned domains for visualization.
     def track_pruned_domain_for_display(self):
         return

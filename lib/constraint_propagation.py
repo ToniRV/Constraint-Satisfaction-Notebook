@@ -3,6 +3,7 @@
 import lib.csp
 import time
 import matplotlib.pyplot as plt
+
 def AC3(csp, queue=None, removals=None):
     """[Figure 6.3]"""
     if queue is None:
@@ -17,7 +18,6 @@ def AC3(csp, queue=None, removals=None):
                 if Xk != Xj:
                     queue.append((Xk, Xi))
     return True
-
 
 def revise(csp, Xi, Xj, removals):
     """Return true if we remove a value."""
