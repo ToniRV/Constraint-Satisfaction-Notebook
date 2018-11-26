@@ -7,6 +7,28 @@ import random
 import matplotlib.pyplot as plt
 import numpy as np
 
+
+def text2problem(fname):
+    with open(fname) as f:
+        content = f.readlines()
+    # you may also want to remove whitespace characters like `\n` at the end of each line
+    content = [x.strip() for x in content] 
+
+    problems = []
+    for i in range(50):
+        string = ''
+        for j in range(9):
+            string1 = ''
+            for k in content[i*10+j]:
+                if k == '0':
+                    temp = '.'
+                else:
+                    temp = k
+                string1 += temp
+            string += string1
+        problems.append(string) 
+    return problems
+
 def flatten(seqs):
     return sum(seqs, [])
 

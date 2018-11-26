@@ -39,10 +39,11 @@ def AC1(csp, queue=None, removals=None):
         revise(csp, Xi, Xj, removals); revise(csp, Xj, Xi, removals)
     return True
 
-def implementAC1(e):
+def implementAC1(e,pr=True):
     counter = 0
     start_time = time.time()
     elast = dict()
+    done = False
     while True:
         check =  False
         AC1(e);
@@ -53,25 +54,32 @@ def implementAC1(e):
                 break
         if counter != 0 and check:
             if elast == e.infer_assignment():
-                print()
-                e.display(e.infer_assignment())
-                print('\nSolution not found after %d iterations'%counter)
-                print('time taken is %f seconds'%(time.time()-start_time))
+                t = time.time()-start_time
+                if pr:
+                    print()
+                    e.display(e.infer_assignment())
+                    print('\nSolution not found after %d iterations'%counter)
+                    print('time taken is %f seconds'%t)
                 break
         if not check:
-            print()
-            e.display(e.infer_assignment())
-            print('\nSolution found in %d iterations'%counter)
-            print('time taken to solve is %f seconds'%(time.time()-start_time))
+            t = time.time()-start_time
+            if pr:
+                print()
+                e.display(e.infer_assignment())
+                print('\nSolution found in %d iterations'%counter)
+                print('time taken to solve is %f seconds'%t)
+            done = True
             break
         elast = e.infer_assignment().copy()
+    return t, done
 
-def implementAC3(e):
+def implementAC3(e,pr=True):
     counter = 0
     start_time = time.time()
     elast = dict()
+    done = False
     while True:
-        check =  False
+        check = False
         AC3(e);
         counter += 1
         for i in range(80):
@@ -80,15 +88,20 @@ def implementAC3(e):
                 break
         if counter != 0 and check:
             if elast == e.infer_assignment():
-                print()
-                e.display(e.infer_assignment())
-                print('\nSolution not found after %d iterations'%counter)
-                print('time taken is %f seconds'%(time.time()-start_time))
+                t = time.time()-start_time
+                if pr:
+                    print()
+                    e.display(e.infer_assignment())
+                    print('\nSolution not found')
+                    print('time taken is %f seconds'%t)                
                 break
         if not check:
-            print()
-            e.display(e.infer_assignment())
-            print('\nSolution found in %d iterations'%counter)
-            print('time taken to solve is %f seconds'%(time.time()-start_time))
-            break
+            t = time.time()-start_time
+            if pr:
+                print()
+                e.display(e.infer_assignment())
+                print('time taken to solve is %f seconds'%t)
+            done = True
+            break             
         elast = e.infer_assignment().copy()
+    return t, done
